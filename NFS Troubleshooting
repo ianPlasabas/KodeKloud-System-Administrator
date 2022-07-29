@@ -1,0 +1,57 @@
+TASK:
+The Nautilus production support team was trying to fix issues with their storage server. 
+The storage server has a shared directory /opt, which is mounted on all app servers at location /var/www/html so that whatever data they store on storage server 
+under /opt can be shared among all app servers. Somehow NFS server is broken and having some issues.
+
+Identify the root cause of the issue and fix it to make sure sharing works fine among all app servers and storage server.
+
+COMMANDS:
+ssh natasha@ststor01
+sudo su -
+  (Check online for [name].service related to nfs or systemctl list-units --type=service --all)
+systemctl status nfs-server
+systemctl status rpcbind
+vi /etc/exports
+  (changed to /opt 172.16.238.10 (...), wrong directory,ip address)
+  (changed to /opt 172.16.238.11 (...), wrong directory,ip address)
+  (changed to /opt 172.16.238.12 (...), wrong directory,ip address)
+systemctl start nfs-server
+systemctl status !$
+exports -av
+  (validation of exports file)
+showmount -e ststor01
+  (export list of ststor01)
+exit
+ssh tony@stapp01
+sudo su -
+systemctl start nfs-server
+systemctl status !$
+systemctl start rpcbind
+systemctl status !$
+mount --help
+man mount
+mount -t nfs ststor01:/opt   /var/www/html
+mount | grep appdata (or df -h for validation)
+exit
+ssh steve@stapp02
+sudo su -
+systemctl start nfs-server
+systemctl status !$
+systemctl start rpcbind
+systemctl status !$
+mount --help
+man mount
+mount -t nfs ststor01:/opt   /var/www/html
+mount | grep appdata (or df -h for validation)
+exit
+ssh banner@stapp03
+sudo su -
+systemctl start nfs-server
+systemctl status !$
+systemctl start rpcbind
+systemctl status !$
+mount --help
+man mount
+mount -t nfs ststor01:/opt   /var/www/html
+mount | grep appdata (or df -h for validation)
+
