@@ -2,7 +2,7 @@ TASK:
 Create a Linux User with a non-interactive shell The System Admin Team of XfusionCorp Industries has installed a backup agent tool on all app servers. 
 As per the tool's requirements, they need to create a user with a non-interactive shell. 
 
-Therefore, create a user named ravi with non-interactive shell in the app01 server
+Therefore, create a user named john with non-interactive shell in the app01 server
 
 COMMANDS:  
 ssh tony@stapp01
@@ -11,6 +11,6 @@ Ir0nM@n
 sudo su -
 Ir0nM@n
 
-adduser ravi  -s /sbin/nologin
-id ravi
+adduser john  -s /sbin/nologin
+id john
 
