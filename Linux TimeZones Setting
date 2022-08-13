@@ -1,0 +1,21 @@
+TASK:
+During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn't match with that of the local datacenter's
+timezone, which is America/Blanc-Sablon.
+
+COMMANDS:
+ssh tony@stapp01
+timedatectl -help
+man timedatectl
+timedatectl set-timezone America/Blanc-Sablon
+timedatectl
+exit
+ssh steve@stapp02
+timedatectl set-timezone America/Blanc-Sablon
+timedatectl
+exit
+ssh banner@stapp03
+timedatectl set-timezone America/Blanc-Sablon
+timedatectl
+exit
+
+
